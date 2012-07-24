@@ -81,6 +81,7 @@ struct skip_grammar : public boost::spirit::classic::grammar<skip_grammar>
             skip
                 =   space_p
                 |   comment_p("//")
+                |   comment_p("/*", "*/")
                 ;
 
             debug();
@@ -276,15 +277,15 @@ struct grammar : public boost::spirit::classic::grammar<grammar>
                 ;
 
             return_stmt
-                =   str_p("return") >> !expr
+                =   ( str_p("return") | str_p("devuelve")) >> !expr
                 ;
 
             break_stmt
-                =   str_p("break")
+                =   ( str_p("break") | str_p("terminar"))
                 ;
 
             continue_stmt
-                =   str_p("continue")
+                =   ( str_p("continue") | str_p("continuar"))
                 ;
 
             assign_stmt
@@ -303,20 +304,20 @@ struct grammar : public boost::spirit::classic::grammar<grammar>
                 ;
 
             if_stmt
-                =   discard_node_d[ str_p("if") ] >> inner_node_d[ '(' >> expr >> ')' ]
+                =   ( discard_node_d[ str_p("if") ] | discard_node_d[ str_p("si") ] ) >> inner_node_d[ '(' >> expr >> ')' ]
                     >> stmt
                         >> !(
-                            discard_node_d[ str_p("else") ] >> stmt
+                            ( discard_node_d[ str_p("else") ] | discard_node_d[ str_p("sino") ]) >> stmt
                         )
                 ;
 
             while_stmt
-                =   discard_node_d[ str_p("while") ] >> inner_node_d[ '(' >> expr >> ')' ]
+                =   ( discard_node_d[ str_p("while") ] | discard_node_d[ str_p("mientras") ]) >> inner_node_d[ '(' >> expr >> ')' ]
                     >> stmt
                 ;
 
             for_stmt
-                =   (discard_node_d[ str_p("for") >> '(' ] | discard_node_d[ str_p("para") >> '(' ] )
+                =   (discard_node_d[ str_p("for") ] | discard_node_d[ str_p("para") ] ) >> discard_node_d[ ch_p('(') ]
                     >>  !assign_stmt >> ch_p(';') >>
                         !expr >> ch_p(';') >>
                         !assign_stmt
@@ -502,7 +503,7 @@ struct grammar : public boost::spirit::classic::grammar<grammar>
                 ;
 
             func_decl
-                =   discard_node_d[ str_p("function") ] >> ident
+                =   ( discard_node_d[ str_p("function") ] | discard_node_d[ str_p("funcion") ]) >> ident
                     >> discard_node_d[ ch_p('(') ]
                         >> infix_node_d[ !list_p(lvar,',') ]
                     >> discard_node_d[ ch_p(')') ]
