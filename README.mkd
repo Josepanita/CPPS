@@ -5,63 +5,28 @@ Esto es un Fork de [dscript](https://github.com/bryanjamesross/dscript) creado p
 
 Es completamente funcional bajo entorno G++ 4.6.3.
 
+DScript es un lenguaje interpretado/
 
+Caracteristica:
 
-Hey all
+* Sitaxis parecida a la de C/PHP.
+* Soporta Funciones definidas en el script y en la propia libreria Standard.
+* Soporte de Arrays Multidimensionales
+* 3 Tipos basicos, Entero, Flotante (decimal) y Cadena.
+* Auto Typecasting
+  - **%var** (variable local, se limpia en el ambito de la funcion actual).
+  - **$var** (variable global, se mantiene activa hasta el fin de la ejecucion o se elimine manualmente).
 
-This is just a heads up that I'm still working on this, and it's almost
-complete. I decided to go with a parse tree instead of an AST, which
-unfortunately added a lot of code to the compilation process, but IMO makes
-the compiler more analogous to the parser and it also seems a bit easier to
-follow.
+Algunas notas de implementacion:
 
-I don't know if you'd call this a "simple" scripting language sample though
-(almost 4000 lines of code).
-
-The language has been dubbed "DScript".
-
-A few features:
-
-* C like syntax (what else?
-* Procedural language that supports both script defined and host environment
-  functions.
-* Multi-dimensional arrays.
-* 3 basic types: string, int, and double
-* Variables are typeless
-* Language defined local and global variables
-	- %var (local variable, gets cleaned up at exit of current function)
-	- $var (global variable, sticks around until manually deleted)
-
-Some notes on implementation:
-
-* Uses nothing but Spirit, Boost and the STD C++ library. Should be fully
-platform independent.
-* Embedding into a host application is dead simple:
-    1. Include the source files in your project (or compile it into a .lib
-       file and link with that)
-    2. Include the dscript.hpp header
-    3. create a dscript::context object
-    4. call the methods of that context object to load and execute scripts.
-* Script code is compiled into byte-code that is executed by the runtime.
-* Script files may be compiled into a byte-code binary format for faster
-  loading time
-* dscript::context objects are fully encapsulated. You can have any number
-  created at any time.
-* Script functions may be called by the host application through the context
-  object.
-* Errors generated are output to a specified std::ostream
-
-Hopefully this should be done in the next couple of days, and then I'm going
-to clean it up and prepare it for release.
-I'm planning on making it dependent on spirit 1.8, so at the very least I'll
-be waiting until that release before this "goes gold".
-
-DScript will be released under the GNU Public License (GPL)
-
-Once fully finished, I'll submit it to the spirit application repository,
-and if it's good enough, maybe you guys could package it as an example.
-
-Bryan Ross
-~~me@daerid.com~~
-bryanjamesross@gmail.com
-
+* Se usan las librerias [Spirit](http://www.boost.org/doc/libs/1_50_0/libs/spirit/doc/html/spirit/introduction.html), [Boost](http://www.boost.org/), y la Standard de C++, para que sea compatible entre plataformas.
+* Embedirlo a una aplicacion es facil (falta por probar):
+    1. Incluir las fuentes, o compilar todo en un .lib e incluirlo.
+    2. Incluir la cabecera dscript.hpp.
+    3. Crear un objeto dscript::context.
+    4. Llama a los metodos de ese contexto para cargar y ejecutar los scripts.
+* El codigo del script es compilado en byte-code que es ejecutado por el runtime.
+* Los archivos de script pueden ser compilados en un binario de byte-code para tiempos de carga mas cortos.
+* Los objetos dscript::context estan bien encapsulados, puedes tener varios a la vez sin problemas.
+* Los errores generados se pueden direccionar a un std::ostream especifico.
+* Funciones del script pueden ser llamadas por una aplicacion padre a traves del objeto dscript::context.
