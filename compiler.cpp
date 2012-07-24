@@ -316,7 +316,7 @@ struct grammar : public boost::spirit::classic::grammar<grammar>
                 ;
 
             for_stmt
-                =   discard_node_d[ str_p("for") >> '(' ]
+                =   (discard_node_d[ str_p("for") >> '(' ] | discard_node_d[ str_p("para") >> '(' ] )
                     >>  !assign_stmt >> ch_p(';') >>
                         !expr >> ch_p(';') >>
                         !assign_stmt

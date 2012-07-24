@@ -12,6 +12,7 @@
 // Standard Library Includes
 #include <algorithm>
 #include <sstream>
+#include <iostream>
 #include <stdexcept>
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -464,11 +465,20 @@ void vmachine::execute(
                 m_runtime_stack.pop();
                 value& newtop = m_runtime_stack.top();
                 // check types (keep int if both are int, otherwise go to flt)
-                if(
-                    top.type == value::type_int &&
-                    newtop.type == value::type_int
-                    )
+                if( top.type == value::type_int && newtop.type == value::type_int )
+                {
                     newtop.intval = newtop.intval == top.intval;
+                }
+                else if( top.type == value::type_str && newtop.type == value::type_str )
+                {
+                    newtop.intval = newtop.strval == top.strval;
+                    newtop.type = value::type_int;
+                }
+                else if( top.type == value::type_str && newtop.type == value::type_str )
+                {
+                    newtop.intval = newtop.strval == top.strval;
+                    newtop.type = value::type_int;
+                }
                 else
                 {
                     // bypass the conversion process
@@ -486,15 +496,24 @@ void vmachine::execute(
                 m_runtime_stack.pop();
                 value& newtop = m_runtime_stack.top();
                 // check types (keep int if both are int, otherwise go to flt)
-                if(
-                    top.type == value::type_int &&
-                    newtop.type == value::type_int
-                    )
+                if( top.type == value::type_int && newtop.type == value::type_int )
+                {
                     newtop.intval = newtop.intval != top.intval;
+                }
+                else if( top.type == value::type_str && newtop.type == value::type_str )
+                {
+                    newtop.intval = newtop.strval != top.strval;
+                    newtop.type = value::type_int;
+                }
+                else if( top.type == value::type_str && newtop.type == value::type_str )
+                {
+                    newtop.intval = newtop.strval != top.strval;
+                    newtop.type = value::type_int;
+                }
                 else
                 {
                     // bypass the conversion process
-                    newtop.intval = newtop.to_flt() != top.to_flt();
+                    newtop.intval = newtop.to_flt() == top.to_flt();
                     newtop.type = value::type_int;
                 }
                 ++instr;

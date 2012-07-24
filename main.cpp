@@ -1,5 +1,6 @@
 #include "dscript.h"
 #include "stdlib.h"
+#include <stdio.h>
 
 using namespace std;
 using namespace dscript;
@@ -7,12 +8,16 @@ using namespace dscript;
 int main(int argc,char* argv[])
 {
     context ctx;
-    ctx.enable_logging(&cout);
+//    ctx.enable_logging(&cout);
     link_stdlib(ctx);
 
-    ctx.dump_file(cout, "test.txt");
-    ctx.compile("test.txt");
-    ctx.exec_compiled("test.txt");
+  //  ctx.dump_file(cout, "test.txt");
+	if(argc > 1) {
+	    ctx.compile(argv[1]);
+	    ctx.exec_compiled(argv[1]);
+	}else{
+		printf("Formato: ./dscript <archivo>");
+	}
 
     return 0;
 }

@@ -119,7 +119,44 @@ namespace stdlib
             );
     }
 
+    void strlen(ARGS)
+    {
+        int len = (unsigned) std::strlen( args[0].to_str().c_str() );
+        ctx.set_return(
+             len
+            );
+    }
+
+    void atoi(ARGS)
+    {
+        ctx.set_return(
+             ::atoi(
+                args[0].to_str().c_str()
+                )
+            );
+    }
+
+    void atof(ARGS)
+    {
+        ctx.set_return(
+             ::atof(
+                args[0].to_str().c_str()
+                )
+            );
+    }
+
+
+
     // Math functions
+    void abs(ARGS)
+    {
+        ctx.set_return(
+            ::abs(
+                args[1].to_flt()
+                )
+            );
+    }
+
     void sqrt(ARGS)
     {
         ctx.set_return(
@@ -192,6 +229,9 @@ namespace stdlib
                 )
             );
     }
+
+
+
 
 
 
@@ -327,6 +367,24 @@ namespace
             &dscript::stdlib::substr,
             2,3,"(%str,%start[,%length])"
             );
+
+        ctx.link_function(
+            "strlen",
+            &dscript::stdlib::strlen,
+            1,1,"(%str)"
+            );
+
+        ctx.link_function(
+            "atof",
+            &dscript::stdlib::atof,
+            1,1,"(%str)"
+            );
+
+        ctx.link_function(
+            "atoi",
+            &dscript::stdlib::atoi,
+            1,1,"(%str)"
+            );
     }
 
     void link_math_functions(dscript::context& ctx)
@@ -334,6 +392,12 @@ namespace
         ctx.link_function(
             "sqrt",
             &dscript::stdlib::sqrt,
+            1,1,"(%num)"
+            );
+
+        ctx.link_function(
+            "abs",
+            &dscript::stdlib::abs,
             1,1,"(%num)"
             );
 
