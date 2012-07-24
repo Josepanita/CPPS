@@ -332,6 +332,26 @@ namespace stdlib
             break;
         }
     }
+
+    void tipo(ARGS)
+    {
+        dscript::value v = args[0];
+        switch(v.type)
+        {
+        case dscript::value::type_int:
+            ctx.set_return("entero");
+            break;
+        case dscript::value::type_flt:
+            ctx.set_return("decimal");
+            break;
+        case dscript::value::type_str:
+            ctx.set_return("cadena");
+            break;
+        default:
+            ctx.set_return("desconocido");
+            break;
+        }
+    }
 }
 
 namespace
@@ -375,8 +395,26 @@ namespace
             );
 
         ctx.link_function(
+            "longitud",
+            &dscript::stdlib::strlen,
+            1,1,"(%str)"
+            );
+
+        ctx.link_function(
             "atof",
             &dscript::stdlib::atof,
+            1,1,"(%str)"
+            );
+
+        ctx.link_function(
+            "valor",
+            &dscript::stdlib::atof,
+            1,1,"(%str)"
+            );
+
+        ctx.link_function(
+            "entero",
+            &dscript::stdlib::atoi,
             1,1,"(%str)"
             );
 
@@ -385,12 +423,20 @@ namespace
             &dscript::stdlib::atoi,
             1,1,"(%str)"
             );
+
+
     }
 
     void link_math_functions(dscript::context& ctx)
     {
         ctx.link_function(
             "sqrt",
+            &dscript::stdlib::sqrt,
+            1,1,"(%num)"
+            );
+
+        ctx.link_function(
+            "raiz",
             &dscript::stdlib::sqrt,
             1,1,"(%num)"
             );
@@ -443,6 +489,12 @@ namespace
             2,2,"(%num,%exp)"
             );
 
+        ctx.link_function(
+            "potencia",
+            &dscript::stdlib::pow,
+            2,2,"(%num,%exp)"
+            );
+
 
 
     }
@@ -452,6 +504,16 @@ namespace
         ctx.link_function(
             "print",
             &dscript::stdlib::print
+            );
+
+        ctx.link_function(
+            "imprimir",
+            &dscript::stdlib::print
+            );
+
+        ctx.link_function(
+            "leer",
+            &dscript::stdlib::readln
             );
 
         ctx.link_function(
@@ -496,6 +558,12 @@ namespace
         ctx.link_function(
             "gettype",
             &dscript::stdlib::gettype,
+            1,1,"(%val)"
+            );
+
+        ctx.link_function(
+            "tipo",
+            &dscript::stdlib::tipo,
             1,1,"(%val)"
             );
     }
