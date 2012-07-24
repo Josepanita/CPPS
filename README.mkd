@@ -1,64 +1,11 @@
-dscript
+DScript
 =======
 
-This is a little scripting language I put together when I was heavy
-into c++ development and studying compiler theory. I haven't
-touched this code since it was finished up and pushed out to the
-boost.spirit mailing list in November of 2003. Below are the original
-emails announcing its completion.
+Esto es un Fork de [dscript](https://github.com/bryanjamesross/dscript) creado por Bryan Ross.
 
-**Note:** This does _not_ build on current compilers. The version of
-boost that it uses is horribly outdated. I'm going to try to update
-this to current c++ compilers (g++, vs 2010/2012), but no guarantees
+Es completamente funcional bajo entorno G++ 4.6.3.
 
--------------------------------------------------------------------------------
 
-```
-Subject: [Spirit-general] Scripting Language
-From: "Bryan Ross" ~~<me@daerid.com>~~ bryanjamesross@gmail.com
-Date: Wed, 19 Nov 2003 18:46:04 -0800
-To: <spirit-general@lists.sourceforge.net>
-```
-
-Hey all.
-
-Well, here it is. It's far from complete, and not 100% debugged, but it
-works. There's a sample main.cpp in the archive that will compile and
-execute the included test.txt file, which should demonstrate the syntax of
-the language fairly well. Also, the entire spirit grammar is in
-compiler.cpp, which will explicitly explain the syntax of the scripting
-language.
-
-I'd love for all of you to take a look and give me any possible feedback.
-Also, don't hesitate to rip it apart or improve on anything you see. The
-fact of the matter is, I don't have much time available right now to
-finishing and polishing it up. I'd just figure I'd get something out there
-that actually functions that others could take a look at and see how spirit
-may be used for designing and implementing a scripting language.
-
-I wanted to upload this to http://spirit.sourceforge.net/dl/, but I forgot
-my login password, and the password recovery system is borked, so I'll just
-post it to the newsgroup.
-
-Also, to re-iterate, here is the post I made earlier, with some more info on
-the language:
-
-PS: Joel, I've updated the files all to sport a very slightly modified
-version of the spirit license.
-
-Bryan Ross
-~~me@daerid.com~~
-bryanjamesross@gmail.com
-
--------------------------------------------------------------------------------
-
-```
------Original Message-----
-From: Bryan Ross [me@daerid.com]
-Sent: Thursday, November 13, 2003 10:15 AM
-To: spirit-general@lists.sourceforge.net
-Subject: [Spirit-general] script language sample [UPDATE]
-```
 
 Hey all
 

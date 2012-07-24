@@ -1,0 +1,56 @@
+$x = 0; // int
+
+print("For Loop (break & omitting first argument): ");
+
+for(; $x<10; $x++){
+	if($x == 4){
+		continue;
+	}
+
+	print($x @ " ");
+	if($x == 5){
+		break;
+	}
+}
+
+print("\nFull For Loop: ");
+
+for($x = 0; $x<10; $x++){
+	print($x @ " ");
+}
+
+print("\nWhile Loop: ");
+
+while($x>0){
+	print($x @ " ");
+	$x--;
+}
+print("\n");
+
+imprimir("Bule Para (omitiendo el primer argumento, y terminandolo dinamicamente): ");
+
+para($x = 0; $x<10; $x++){
+	si($x == 4){
+		continuar;
+	}
+
+	imprimir($x @ " ");
+	si($x == 5){
+		terminar;
+	}
+}
+
+imprimir("\nBucle para Completo: ");
+
+para($x = 0; $x<10; $x++){
+	imprimir($x @ " ");
+}
+
+imprimir("\nBucle Mientras: ");
+
+mientras($x>0){
+	imprimir($x @ " ");
+	$x--;
+}
+
+imprimir("\n");

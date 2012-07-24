@@ -275,7 +275,9 @@ void context::dump_code(std::ostream& out,const std::string& code)
         string_table strings;
         float_table floats;
         codeblock_t codeblock = dscript::compile(code,strings,floats);
-        dump_asm(codeblock,out);
+        ofstream output;
+        output.open ("logs/output.log");
+        dump_asm(codeblock,output);
     }
     catch(compiler_error& ce)
     {

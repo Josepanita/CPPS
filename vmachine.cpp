@@ -52,7 +52,7 @@ void vmachine::execute(
                 m_runtime_stack.pop();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_call_func:
             // get a reference to the func_table entry
@@ -107,28 +107,28 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_push_str:
             // push the named string
             ++instr;
             m_runtime_stack.push(instr->get_str());
             ++instr;
-	        break;
+            break;
 
         case op_push_int:
             // push the int
             ++instr;
             m_runtime_stack.push(instr->get_int());
             ++instr;
-	        break;
+            break;
 
         case op_push_float:
             // push a float
             ++instr;
             m_runtime_stack.push(*(instr->get_flt()));
             ++instr;
-	        break;
+            break;
 
         case op_cat_aidx_expr:
             // cat the two values on top with a '_'
@@ -140,7 +140,7 @@ void vmachine::execute(
                     m_runtime_stack.top().to_str() + '_' + tocat.to_str();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_push_var:
             {
@@ -150,7 +150,7 @@ void vmachine::execute(
                 m_runtime_stack.push(dict[instr->get_str()]);
                 ++instr;
             }
-	        break;
+            break;
 
         case op_push_var_value:
             // replace the top of the stack with the value of
@@ -171,7 +171,7 @@ void vmachine::execute(
                 m_runtime_stack.push(m_return_val);
                 ++instr;
             }
-	        break;
+            break;
 
         case op_inc_var:
             // increment the variable named by one
@@ -195,7 +195,7 @@ void vmachine::execute(
                 --(dict[ste].intval);
                 ++instr;
             }
-	        break;
+            break;
 
         case op_neg:
             // negate the top of the stack
@@ -203,7 +203,7 @@ void vmachine::execute(
             m_runtime_stack.top().set_type(value::type_int);
             m_runtime_stack.top().intval =  -(m_runtime_stack.top().intval);
             ++instr;
-	        break;
+            break;
 
         case op_log_not:
             // logical not the top of the stack
@@ -211,7 +211,7 @@ void vmachine::execute(
             m_runtime_stack.top().set_type(value::type_int);
             m_runtime_stack.top().intval =  !(m_runtime_stack.top().intval);
             ++instr;
-	        break;
+            break;
 
         case op_bit_not:
             // binary not the top of the stack
@@ -219,7 +219,7 @@ void vmachine::execute(
             m_runtime_stack.top().set_type(value::type_int);
             m_runtime_stack.top().intval =  ~(m_runtime_stack.top().intval);
             ++instr;
-	        break;
+            break;
 
         case op_mul:
             {
@@ -241,7 +241,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_div:
             {
@@ -268,7 +268,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_mod:
             {
@@ -282,7 +282,7 @@ void vmachine::execute(
                 newtop.intval %= top.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_add:
             {
@@ -304,7 +304,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_sub:
             {
@@ -326,7 +326,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_cat:
             {
@@ -340,7 +340,7 @@ void vmachine::execute(
                 newtop.strval.append(top.to_str());
                 ++instr;
             }
-	        break;
+            break;
 
         case op_shl:
             {
@@ -354,7 +354,7 @@ void vmachine::execute(
                 newtop.intval <<= top.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_shr:
             {
@@ -368,7 +368,7 @@ void vmachine::execute(
                 newtop.intval >>= top.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_cmp_less_eq:
             {
@@ -390,7 +390,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_cmp_less:
             {
@@ -412,7 +412,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_cmp_grtr_eq:
             {
@@ -434,7 +434,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_cmp_grtr:
             {
@@ -456,7 +456,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_eq:
             {
@@ -474,11 +474,6 @@ void vmachine::execute(
                     newtop.intval = newtop.strval == top.strval;
                     newtop.type = value::type_int;
                 }
-                else if( top.type == value::type_str && newtop.type == value::type_str )
-                {
-                    newtop.intval = newtop.strval == top.strval;
-                    newtop.type = value::type_int;
-                }
                 else
                 {
                     // bypass the conversion process
@@ -487,7 +482,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_neq:
             {
@@ -505,11 +500,6 @@ void vmachine::execute(
                     newtop.intval = newtop.strval != top.strval;
                     newtop.type = value::type_int;
                 }
-                else if( top.type == value::type_str && newtop.type == value::type_str )
-                {
-                    newtop.intval = newtop.strval != top.strval;
-                    newtop.type = value::type_int;
-                }
                 else
                 {
                     // bypass the conversion process
@@ -518,7 +508,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_bit_and:
             {
@@ -531,7 +521,7 @@ void vmachine::execute(
                 newtop.intval &= top.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_bit_or:
             {
@@ -544,7 +534,7 @@ void vmachine::execute(
                 newtop.intval |= top.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_bit_xor:
             {
@@ -557,7 +547,7 @@ void vmachine::execute(
                 newtop.intval ^= top.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_log_and:
             {
@@ -579,7 +569,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_log_or:
             {
@@ -601,7 +591,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_decl_func:
             {
@@ -623,7 +613,7 @@ void vmachine::execute(
 
                 instr = func_end;
             }
-	        break;
+            break;
 
         case op_pop_param:
             {
@@ -640,18 +630,18 @@ void vmachine::execute(
                     stack_frame[ste].clear();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_return:
             returned = true;
-	        break;
+            break;
 
         case op_store_ret:
             // store the top of the runtime stack in the return value register
             m_return_val = m_runtime_stack.top();
             m_runtime_stack.pop();
             ++instr;
-	        break;
+            break;
 
         case op_assign:
             // the top of the stack is a value
@@ -667,7 +657,7 @@ void vmachine::execute(
                 dict[ste] = v;
                 ++instr;
             }
-	        break;
+            break;
 
         case op_assign_var:
             // assign the variable designated
@@ -680,7 +670,7 @@ void vmachine::execute(
                 m_runtime_stack.pop();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_mul_asn:
             // the top of the stack is a value
@@ -703,7 +693,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_mul_asn_var:
             // multiply a specified variable by a value
@@ -722,10 +712,10 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_div_asn:
-	        // the top of the stack is a value
+            // the top of the stack is a value
             // the next underneath is the name of a variable
             // divide the variable by the value
             {
@@ -745,7 +735,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_div_asn_var:
             // divide a specified variable by a value
@@ -764,7 +754,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_mod_asn:
             // the top of the stack is a value
@@ -782,7 +772,7 @@ void vmachine::execute(
                 var.intval %= val.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_mod_asn_var:
             // mod a specified variable by a value
@@ -797,7 +787,7 @@ void vmachine::execute(
                 var.intval %= val.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_add_asn:
             // the top of the stack is a value
@@ -820,7 +810,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_add_asn_var:
             // add a specified variable to a value
@@ -839,7 +829,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_sub_asn:
             // the top of the stack is a value
@@ -862,7 +852,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_sub_asn_var:
             // subtract a value from a specified variable
@@ -881,7 +871,7 @@ void vmachine::execute(
                 }
                 ++instr;
             }
-	        break;
+            break;
 
         case op_cat_asn:
             // the top of the stack is a value
@@ -899,7 +889,7 @@ void vmachine::execute(
                 var.strval.append(val.to_str());
                 ++instr;
             }
-	        break;
+            break;
 
         case op_cat_asn_var:
             // add a specified variable to a value
@@ -913,7 +903,7 @@ void vmachine::execute(
                 var.strval.append(val.to_str());
                 ++instr;
             }
-	        break;
+            break;
 
         case op_band_asn:
             // binary and a variable's value
@@ -929,7 +919,7 @@ void vmachine::execute(
                 var.intval &= val.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_band_asn_var:
             {
@@ -943,10 +933,10 @@ void vmachine::execute(
                 var.intval &= val.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_bor_asn:
-	        // binary or a variable's value
+            // binary or a variable's value
             {
                 value val = m_runtime_stack.top();
                 m_runtime_stack.pop();
@@ -959,7 +949,7 @@ void vmachine::execute(
                 var.intval |= val.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_bor_asn_var:
             {
@@ -973,7 +963,7 @@ void vmachine::execute(
                 var.intval |= val.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_bxor_asn:
             // binary xor a variable's value
@@ -989,7 +979,7 @@ void vmachine::execute(
                 var.intval ^= val.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_bxor_asn_var:
             {
@@ -1003,7 +993,7 @@ void vmachine::execute(
                 var.intval ^= val.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_shl_asn:
             // shift left a variable's value
@@ -1019,7 +1009,7 @@ void vmachine::execute(
                 var.intval <<= val.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_shl_asn_var:
             {
@@ -1033,7 +1023,7 @@ void vmachine::execute(
                 var.intval <<= val.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_shr_asn:
             // shift right a variable's value
@@ -1050,7 +1040,7 @@ void vmachine::execute(
                 var.intval >>= val.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_shr_asn_var:
             {
@@ -1064,7 +1054,7 @@ void vmachine::execute(
                 var.intval >>= val.to_int();
                 ++instr;
             }
-	        break;
+            break;
 
         case op_jmp_false:
             {
@@ -1078,7 +1068,7 @@ void vmachine::execute(
                     ++instr;
                 m_runtime_stack.pop();
             }
-	        break;
+            break;
 
         case op_jmp:
             {
@@ -1086,7 +1076,7 @@ void vmachine::execute(
                 // offset
                 instr = begin + instr->get_int();
             }
-	        break;
+            break;
 
         default:
             {

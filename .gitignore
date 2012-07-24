@@ -59,6 +59,6 @@ packages/
 *.dsc
 *.o
 *.dep
-dscript.exe
+dscript
 *.exe
 *.stackdump

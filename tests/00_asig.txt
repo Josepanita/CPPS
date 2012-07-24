@@ -1,0 +1,36 @@
+function print_line(%string)
+{
+	print(%string @ "\n");
+}
+
+%x = 0; // int
+%y = "Test"; // string
+%z = 1.234567; // double
+%w = "123"; // string
+
+%x = %y;
+
+print_line(gettype(%x));
+print_line(gettype(%y));
+print_line(gettype(%z));
+print_line(gettype(%w));
+
+
+imprimir("\n");
+
+funcion dime(%string)
+{
+	imprimir(%string @ "\n");
+}
+
+%x = 0; // int
+%y = "Test"; // string
+%z = 1.234567; // double
+%w = "123"; // string
+
+%x = %y;
+
+dime(tipo(%x));
+dime(tipo(%y));
+dime(tipo(%z));
+dime(tipo(%w));
