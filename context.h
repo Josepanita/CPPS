@@ -32,6 +32,9 @@ namespace dscript
     class context
     {
     public:
+        
+        std::ostream* log_out;
+
         context();
         void enable_logging(std::ostream* out);
         void disable_logging();
@@ -63,10 +66,11 @@ namespace dscript
 
         void dump_code(std::ostream& out,const std::string& code);
         void dump_file(std::ostream& out,const std::string& file);
+
     private:
         vmachine runtime;
         std::map<std::string,codeblock_t> codeblocks;
-        std::ostream* log_out;
+        
     };
 }
 

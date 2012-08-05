@@ -8,8 +8,6 @@ function print_line(%string)
 %z = 1.234567; // double
 %w = "123"; // string
 
-%x = %y;
-
 print_line(gettype(%x));
 print_line(gettype(%y));
 print_line(gettype(%z));

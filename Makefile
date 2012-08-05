@@ -24,13 +24,13 @@ OBJS=$(SRCS:.cpp=.o)
 
 .PHONY: all clean
 
-all: dscript
+all: cpps
 
 clean:
 		rm *.dep; rm *.o
 
-dscript: $(OBJS)
-	g++ $(LDFLAGS) -o dscript $(OBJS)
+cpps: $(OBJS)
+	g++ -o cpps $(OBJS)
 
 -include $(subst .cpp,.dep,$(SRCS))
 

@@ -150,6 +150,7 @@ enum parser_ids
     inc_dec_stmt_id,
     inc_dec_op_id,
     aidx_id,
+    semicolon,
     num_rule_ids
 };
 
@@ -351,7 +352,7 @@ struct grammar : public boost::spirit::classic::grammar<grammar>
             ident
                 =   lexeme_d[
                         token_node_d[
-                            alpha_p >> *(alnum_p | '_' | ':')
+                            alpha_p >> *(alnum_p | '_' )
                         ]
                     ]
                 ;
@@ -362,7 +363,9 @@ struct grammar : public boost::spirit::classic::grammar<grammar>
 
             logical_op
                 =   str_p("||")
-                |   "&&"
+                |   str_p("&&")
+                |   str_p("OR")
+                |   str_p("AND")
                 ;
 
             bitwise_expr
@@ -478,9 +481,10 @@ struct grammar : public boost::spirit::classic::grammar<grammar>
                 ;
 
             gvar
-                =   lexeme_d[
+                =   
+                lexeme_d[
                         token_node_d[
-                            ch_p('$') >> alpha_p >> *(alnum_p | '_' | ':')
+                            ch_p('$') >> ident
                         ]
                     ]
                 ;
@@ -488,7 +492,7 @@ struct grammar : public boost::spirit::classic::grammar<grammar>
             lvar
                 =   lexeme_d[
                         token_node_d[
-                            ch_p('%') >> alpha_p >> *(alnum_p | '_' | ':')
+                            ch_p('%') >> ident
                         ]
                     ]
                 ;
@@ -541,14 +545,17 @@ void compile_func_call(const TreeIterT& iter, compile_context& ctx)
     assert(iter->value.id() == func_call_id);
 
     // Are there params to be pushed?
+
     if(iter->children.size() > 1)
     {
+
         TreeIterT expr = iter->children.end();
         --expr; // last first (push args from right to left
         assert(expr->value.id() == expr_id);
         TreeIterT end = iter->children.begin();
         for(; expr != end; --expr)
         {
+
             assert(expr->value.id() == expr_id);
             // compile the expression
             compile_expr(expr,ctx);
@@ -563,6 +570,7 @@ void compile_func_call(const TreeIterT& iter, compile_context& ctx)
     // Call the function
     ctx.code.push_back(op_call_func);
     string name(ident.value.begin(),ident.value.end());
+
     ctx.code.push_back(ctx.strings.insert(name));
 }
 
@@ -607,7 +615,7 @@ void compile_constant(const TreeIterT& iter, compile_context& ctx)
         }
         break;
     default:
-        throw compile_error<TreeIterT>("Unknown constant node type",iter);
+        throw compile_error<TreeIterT>("Tipo de constante desconocida.",iter);
         break;
     };
 }
@@ -692,7 +700,7 @@ void compile_expr_atom(const TreeIterT& iter, compile_context& ctx)
         ctx.code.push_back(op_load_ret);
         break;
     default:
-        throw compile_error<TreeIterT>("Unknown expr_atom node",iter);
+        throw compile_error<TreeIterT>("Expresion desconocida",iter);
     }
 }
 
@@ -787,7 +795,7 @@ void compile_unary_expr(const TreeIterT& iter, compile_context& ctx)
                 ctx.code.push_back(op_bit_not);
                 break;
             default:
-                throw compile_error<TreeIterT>("Unknown unary operator",iter);
+                throw compile_error<TreeIterT>("Operador unario desconocido",iter);
             }
         }
         break;
@@ -795,7 +803,7 @@ void compile_unary_expr(const TreeIterT& iter, compile_context& ctx)
         compile_inc_dec_expr(iter->children.begin(),ctx);
         break;
     default:
-        throw compile_error<TreeIterT>("Unknown Unary Expr Node",iter);
+        throw compile_error<TreeIterT>("Nodo de Expresion Unario desconocido",iter);
     }
 }
 
@@ -834,7 +842,7 @@ void compile_mul_expr(const TreeIterT& iter, compile_context& ctx)
             ctx.code.push_back(op_mod);
             break;
         default:
-            throw compile_error<TreeIterT>("Unknown mul op",iter);
+            throw compile_error<TreeIterT>("Operador de multiplicacion desconocido",iter);
         }
     }
 }
@@ -874,7 +882,7 @@ void compile_add_expr(const TreeIterT& iter, compile_context& ctx)
             ctx.code.push_back(op_cat);
             break;
         default:
-            throw compile_error<TreeIterT>("Unknown add op",iter);
+            throw compile_error<TreeIterT>("Operador de adicion desconocido.",iter);
         }
     }
 }
@@ -911,7 +919,7 @@ void compile_shift_expr(const TreeIterT& iter, compile_context& ctx)
             ctx.code.push_back(op_shr);
             break;
         default:
-            throw compile_error<TreeIterT>("Unknown shift op",iter);
+            throw compile_error<TreeIterT>("Operador de bitshifting desconocido",iter);
         }
     }
 }
@@ -955,7 +963,7 @@ void compile_compare_expr(const TreeIterT& iter, compile_context& ctx)
                 ctx.code.push_back(op_cmp_grtr);
             break;
         default:
-            throw compile_error<TreeIterT>("Unknown comparison op",iter);
+            throw compile_error<TreeIterT>("Operador de comparacion desconocido",iter);
         }
     }
 }
@@ -992,7 +1000,7 @@ void compile_equality_expr(const TreeIterT& iter, compile_context& ctx)
             ctx.code.push_back(op_neq);
             break;
         default:
-            throw compile_error<TreeIterT>("Unknown equality op",iter);
+            throw compile_error<TreeIterT>("Operador de igualdad desconocido",iter);
         }
     }
 }
@@ -1032,7 +1040,7 @@ void compile_bitwise_expr(const TreeIterT& iter, compile_context& ctx)
             ctx.code.push_back(op_bit_xor);
             break;
         default:
-            throw compile_error<TreeIterT>("Unknown bitwise op",iter);
+            throw compile_error<TreeIterT>("Operador binario desconocido.",iter);
         }
     }
 }
@@ -1069,7 +1077,7 @@ void compile_expr(const TreeIterT& iter, compile_context& ctx)
             ctx.code.push_back(op_log_or);
             break;
         default:
-            throw compile_error<TreeIterT>("Unknown expr op",iter);
+            throw compile_error<TreeIterT>("Operacion de expresion desconocido.",iter);
         }
     }
 }
@@ -1158,12 +1166,16 @@ void compile_inc_dec_stmt(const TreeIterT& iter, compile_context& ctx)
 template<typename TreeIterT>
 void compile_assign_stmt(const TreeIterT& iter, compile_context& ctx)
 {
+
     assert(iter->value.id() == assign_stmt_id);
 
     // as assign statement either has 3 nodes, or 1
     assert(iter->children.size() == 3 || iter->children.size() == 1);
+
     if(iter->children.size() == 3)
     {
+
+
         typedef typename TreeIterT::value_type node_t;
 
         const node_t& op = get_first_leaf(iter->children[1]);
@@ -1198,6 +1210,7 @@ void compile_assign_stmt(const TreeIterT& iter, compile_context& ctx)
         bool do_var = var->children.size() == 1;
 
         // only need to check the first char:
+
         switch(op_tok[0])
         {
         case '=':
@@ -1237,7 +1250,7 @@ void compile_assign_stmt(const TreeIterT& iter, compile_context& ctx)
             opcode = do_var ? op_shr_asn_var : op_shr_asn;
             break;
         default:
-            throw compile_error<TreeIterT>("Unknown assignment operator",iter);
+            throw compile_error<TreeIterT>("Operador de asignacion desconocido.",iter);
         }
 
         // add the appropriate opcode
@@ -1248,8 +1261,10 @@ void compile_assign_stmt(const TreeIterT& iter, compile_context& ctx)
         if(do_var) // otherwise the variable is explicitly stated in the next instr
             ctx.code.push_back(ctx.strings.insert(var_tok));
     }
-    else // it's an inc_dec_stmt
+    else{
+        // it's an inc_dec_stmt
         compile_inc_dec_stmt(iter->children.begin(),ctx);
+    }
 }
 
 template<typename TreeIterT>
@@ -1364,7 +1379,7 @@ void compile_break_stmt(const TreeIterT& iter, compile_context& ctx)
 {
     assert(iter->value.id() == break_stmt_id);
     if(ctx.loop_count == 0)
-        throw compile_error<TreeIterT>("break encountered outside of loop",iter);
+        throw compile_error<TreeIterT>("No se puede terminar un bucle sin estar en uno.",iter);
     else
     {
         // push an op_jmp
@@ -1380,15 +1395,19 @@ template<typename TreeIterT>
 void compile_continue_stmt(const TreeIterT& iter, compile_context& ctx)
 {
     assert(iter->value.id() == continue_stmt_id);
-    if(ctx.loop_count == 0)
-        throw compile_error<TreeIterT>("continue encountered outside of loop",iter);
+
+    if(ctx.loop_count == 0){
+        throw compile_error<TreeIterT>("No se puede continuar un bucle sin estar en uno.",iter);}
     else
     {
+
         // push an op_jmp
         ctx.code.push_back(op_jmp);
         // push the current index to be resolved
+
         ctx.continue_indices.top().push(ctx.code.size());
         // now make it exist :)
+
         ctx.code.push_back(0); // to be resolved
     }
 }
@@ -1491,6 +1510,7 @@ void compile_stmt(const TreeIterT& iter, compile_context& ctx)
     assert(iter->value.id() == stmt_id);
     TreeIterT child = iter->children.begin();
     parser_ids id = static_cast<parser_ids>(child->value.id().to_long());
+
     switch(id)
     {
     case func_call_id:
@@ -1501,7 +1521,7 @@ void compile_stmt(const TreeIterT& iter, compile_context& ctx)
         break;
     case return_stmt_id:
         if(ctx.func_depth == 0)
-            throw compile_error<TreeIterT>("return statement found at global scope",iter);
+            throw compile_error<TreeIterT>("No se puede returnar un valor desde un ambito global",iter);
         else
             compile_return_stmt(child,ctx);
         break;
@@ -1533,7 +1553,7 @@ void compile_stmt(const TreeIterT& iter, compile_context& ctx)
             break;
         }
     default:
-        throw compile_error<TreeIterT>("Unknown Statement Node (SANITY CHECK)",iter);
+        throw compile_error<TreeIterT>("Declaracion desconocida",iter);
     }
 }
 
@@ -1545,6 +1565,7 @@ void compile_stmt_list(const TreeIterT& iter, compile_context& ctx)
     TreeIterT end = iter->children.end();
     for(; child != end; ++child)
         compile_stmt(child,ctx);
+
 }
 
 template<typename TreeIterT>
@@ -1572,6 +1593,8 @@ codeblock_t compile(const string& code,string_table& strings,float_table& floats
 {
     // Create a compile context
     compile_context ctx(strings,floats);
+    ctx.loop_count = 0;
+    ctx.func_depth = 0;
     // Attempt to parse the string
     typedef position_iterator<string::const_iterator> iter_t;
 
@@ -1588,34 +1611,41 @@ codeblock_t compile(const string& code,string_table& strings,float_table& floats
 
     typedef node_iter_data_factory<> fact_t;
     tree_parse_info<iter_t,fact_t> info = pt_parse<fact_t>(first, last, grammar, skip);
+
+    cout<<info.stop.get_position().line<<" Lineas de codigo interpretadas";
+
     if(info.match)
     {
-		if(info.length > 0)
-		{
-			typedef tree_node<
-				tree_match<
-					iter_t,
-					fact_t,
-					nil_t
-				>::parse_node_t
-			> node_t;
-			typedef vector<node_t>::const_iterator tree_iter_t;
+        if(info.length > 0)
+        {
+            typedef tree_node<
+                tree_match<
+                    iter_t,
+                    fact_t,
+                    nil_t
+                >::parse_node_t
+            > node_t;
+            typedef vector<node_t>::const_iterator tree_iter_t;
 
-			try
-			{
-				compile_parse_tree(info.trees,ctx);
-			}
-			catch(compile_error<tree_iter_t>& e)
-			{
-				// construct a new compiler_error and toss it
-				file_position fp = e.node->value.begin().get_position();
-				throw compiler_error(e.what(),code_position(fp.line,fp.column));
-			}
-		}
-		else
-		{
-			// Empty code. All comments or some such
-		}
+            try
+            {
+                compile_parse_tree(info.trees,ctx);
+            }
+            catch(compile_error<tree_iter_t>& e)
+            {
+                // construct a new compiler_error and toss it
+                file_position fp = e.node->value.begin().get_position();
+                throw compiler_error(e.what(),code_position(fp.line,fp.column));
+            }
+
+
+        }
+        else
+        {
+            // Empty code. All comments or some such
+        }
+
+
     }
     else
     {
@@ -1629,6 +1659,5 @@ codeblock_t compile(const string& code,string_table& strings,float_table& floats
     }
     return ctx.code;
 }
-
 } // end namespace dscript
 

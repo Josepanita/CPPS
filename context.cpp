@@ -28,9 +28,8 @@
 using namespace std;
 using namespace dscript;
 
-context::context() : log_out(0)
-{
-}
+context::context() {}
+
 
 void context::enable_logging(ostream* out)
 {
@@ -275,17 +274,16 @@ void context::dump_code(std::ostream& out,const std::string& code)
         string_table strings;
         float_table floats;
         codeblock_t codeblock = dscript::compile(code,strings,floats);
-        ofstream output;
-        output.open ("logs/output.log");
-        dump_asm(codeblock,output);
+        dump_asm(codeblock,out);
     }
     catch(compiler_error& ce)
     {
         if(log_out != 0)
         {
             stringstream msg;
-            msg << "Compiler Error: " << ce.what() << endl;
-            msg << "At: " << ce.pos.line << ":" << ce.pos.col << endl;
+            msg << ce.what() << endl;
+            msg << "Linea: " << ce.pos.line << endl;
+            msg << "Caracter:" << ce.pos.col << endl;
             log_msg(msg.str());
         }
     }
@@ -327,8 +325,9 @@ bool context::eval(const std::string& code)
         if(log_out != 0)
         {
             stringstream msg;
-            msg << "Compiler Error: " << ce.what() << endl;
-            msg << "At: " << ce.pos.line << ":" << ce.pos.col << endl;
+            msg << ce.what() << endl;
+            msg << "Linea: " << ce.pos.line << endl;
+            msg << "Caracter:" << ce.pos.col << endl;
             log_msg(msg.str());
         }
         return false;
@@ -366,8 +365,9 @@ bool context::exec(const std::string& file)
         if(log_out != 0)
         {
             stringstream msg;
-            msg << "Compiler Error: " << ce.what() << endl;
-            msg << "At: " << ce.pos.line << ":" << ce.pos.col << endl;
+            msg << ce.what() << endl;
+            msg << "Linea: " << ce.pos.line << endl;
+            msg << "Caracter:" << ce.pos.col << endl;
             log_msg(msg.str());
         }
         return false;
@@ -430,8 +430,9 @@ bool context::compile(const std::string& file)
         if(log_out != 0)
         {
             stringstream msg;
-            msg << "Compiler Error: " << ce.what() << endl;
-            msg << "At: " << ce.pos.line << ":" << ce.pos.col;
+            msg << ce.what() << endl;
+            msg << "Linea: " << ce.pos.line << endl;
+            msg << "Caracter:" << ce.pos.col << endl;
             log_msg(msg.str());
         }
         return false;

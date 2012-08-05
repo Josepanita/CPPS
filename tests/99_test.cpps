@@ -1,0 +1,24 @@
+funcion dime(%string)
+{
+	imprimir(%string @ "\n");
+}
+
+dime(%x);
+
+%x = leer("Dime el primer numero: ");
+%y = leer("Dime el segundo numero: ");
+
+dime("El valor de x es '"@ %x @"'");
+dime("El valor de y es '"@ %y @"'");
+
+%z = %x + %y;
+dime("x + y = " @%z);
+%z = %x - %y;
+dime("x - y = " @%z);
+%z = %x * %y;
+dime("x * y = " @%z);
+%z = %x / %y;
+
+dime("x / y = " @%z);
+%z = %x % %y;
+dime("x % y = " @%z);
