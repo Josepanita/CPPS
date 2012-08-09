@@ -3,8 +3,6 @@ funcion dime(%string)
 	imprimir(%string @ "\n");
 }
 
-dime(%x);
-
 %x = leer("Dime el primer numero: ");
 %y = leer("Dime el segundo numero: ");
 
@@ -17,7 +15,7 @@ dime("x + y = " @%z);
 dime("x - y = " @%z);
 %z = %x * %y;
 dime("x * y = " @%z);
-%z = %x / %y;
+%z = %x / %y
 
 dime("x / y = " @%z);
 %z = %x % %y;

@@ -1612,45 +1612,35 @@ codeblock_t compile(const string& code,string_table& strings,float_table& floats
     typedef node_iter_data_factory<> fact_t;
     tree_parse_info<iter_t,fact_t> info = pt_parse<fact_t>(first, last, grammar, skip);
 
-    cout<<info.stop.get_position().line<<" Lineas de codigo interpretadas";
-
-    if(info.match)
+    if(info.full)
     {
-        if(info.length > 0)
+        typedef tree_node<
+            tree_match<
+                iter_t,
+                fact_t,
+                nil_t
+            >::parse_node_t
+        > node_t;
+        typedef vector<node_t>::const_iterator tree_iter_t;
+
+
+        try
         {
-            typedef tree_node<
-                tree_match<
-                    iter_t,
-                    fact_t,
-                    nil_t
-                >::parse_node_t
-            > node_t;
-            typedef vector<node_t>::const_iterator tree_iter_t;
-
-            try
-            {
-                compile_parse_tree(info.trees,ctx);
-            }
-            catch(compile_error<tree_iter_t>& e)
-            {
-                // construct a new compiler_error and toss it
-                file_position fp = e.node->value.begin().get_position();
-                throw compiler_error(e.what(),code_position(fp.line,fp.column));
-            }
-
-
+            compile_parse_tree(info.trees,ctx);
+            
         }
-        else
+        catch(compile_error<tree_iter_t>& e)
         {
-            // Empty code. All comments or some such
+            // construct a new compiler_error and toss it
+            file_position fp = e.node->value.begin().get_position();
+            throw compiler_error(e.what(),code_position(fp.line,fp.column));
         }
-
 
     }
     else
     {
         throw compiler_error(
-            "Parse Error",
+            "Error de Sintaxis",
             code_position(
                 info.stop.get_position().line,
                 info.stop.get_position().column

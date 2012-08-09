@@ -11,7 +11,7 @@ function print_line(%string)
 
 %x = readln("Give me a number: ");
 
-print_line(gettype(%y));
+print_line(gettype(atoi(%y)));
 
 %y = readln("Give me a string: ");
 
@@ -19,7 +19,7 @@ print_line(gettype(%x));
 
 %x = leer("Dame un numero: ");
 
-print_line(tipo(%x));
+print_line(tipo(entero(%x)));
 
 %y = leer("Dame una cadena: ");
 

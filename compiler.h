@@ -26,6 +26,7 @@
 
 namespace dscript
 {
+
     /// Compile a string of dscript code into a codeblock
     codeblock_t compile(
         const std::string& code,

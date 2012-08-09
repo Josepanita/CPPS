@@ -15,6 +15,7 @@
 #include <iostream>
 #include <iterator>
 #include <iomanip>
+#include <vector>
 #include <sstream>
 #include <fstream>
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,6 +31,23 @@ using namespace dscript;
 
 context::context() {}
 
+string context::get_source_line (const string &s, int line) {
+    vector<string> elems;
+    stringstream ss(s);
+    string item;
+    while(getline(ss, item, '\n')) {
+        elems.push_back(item);
+    }
+    return elems[line];
+}
+
+string context::trim(string str){
+
+    const size_t range = str.find_last_not_of("\n") + 1;
+   
+    //return str.substr(str.find_first_not_of("\n"), range);
+    return str.substr(0, range);
+}
 
 void context::enable_logging(ostream* out)
 {
@@ -281,9 +299,10 @@ void context::dump_code(std::ostream& out,const std::string& code)
         if(log_out != 0)
         {
             stringstream msg;
+            
             msg << ce.what() << endl;
-            msg << "Linea: " << ce.pos.line << endl;
-            msg << "Caracter:" << ce.pos.col << endl;
+            msg << "en linea: " << ce.pos.line+1 << endl << endl;
+            msg << " ---> " << context::get_source_line(code, ce.pos.line)<<endl;
             log_msg(msg.str());
         }
     }
@@ -325,9 +344,10 @@ bool context::eval(const std::string& code)
         if(log_out != 0)
         {
             stringstream msg;
+            
             msg << ce.what() << endl;
-            msg << "Linea: " << ce.pos.line << endl;
-            msg << "Caracter:" << ce.pos.col << endl;
+            msg << "en linea: " << ce.pos.line+1 << endl << endl;
+            msg << " ---> " << context::get_source_line(code, ce.pos.line)<<endl;
             log_msg(msg.str());
         }
         return false;
@@ -348,6 +368,9 @@ bool context::exec(const std::string& file)
         istream_iterator<char>(infile),
         istream_iterator<char>()
         );
+
+    code_str = context::trim(code_str);
+
     try
     {
         codeblock_t& codeblock = codeblocks[file];
@@ -365,9 +388,10 @@ bool context::exec(const std::string& file)
         if(log_out != 0)
         {
             stringstream msg;
+            
             msg << ce.what() << endl;
-            msg << "Linea: " << ce.pos.line << endl;
-            msg << "Caracter:" << ce.pos.col << endl;
+            msg << "en linea: " << ce.pos.line+1 << endl << endl;
+            msg << " ---> " << context::get_source_line(code_str, ce.pos.line)<<endl;
             log_msg(msg.str());
         }
         return false;
@@ -411,12 +435,13 @@ bool context::compile(const std::string& file)
         log_msg(file + " could not be opened.");
         return false;
     }
-    infile >> noskipws;
+
     string code_str;
     code_str.assign(
         istream_iterator<char>(infile),
         istream_iterator<char>()
         );
+
     try
     {
         save_codeblock(
@@ -430,9 +455,10 @@ bool context::compile(const std::string& file)
         if(log_out != 0)
         {
             stringstream msg;
+            
             msg << ce.what() << endl;
-            msg << "Linea: " << ce.pos.line << endl;
-            msg << "Caracter:" << ce.pos.col << endl;
+            msg << "en linea: " << ce.pos.line+1 << endl << endl;
+            msg << " ---> " << context::get_source_line(code_str, ce.pos.line)<<endl;
             log_msg(msg.str());
         }
         return false;

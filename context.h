@@ -36,6 +36,9 @@ namespace dscript
         std::ostream* log_out;
 
         context();
+        std::string get_source_line( const std::string &s, int line );
+        
+        std::string trim( std::string str );
         void enable_logging(std::ostream* out);
         void disable_logging();
         void log_msg(const std::string& message);

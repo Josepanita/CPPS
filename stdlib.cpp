@@ -230,10 +230,15 @@ namespace stdlib
             );
     }
 
-
-
-
-
+    void raizn(ARGS)
+    {
+        ctx.set_return(
+            ::pow(
+                args[1].to_int(),
+                args[0].to_flt()
+                )
+            );
+    }
 
 
     // IO functions
@@ -487,6 +492,12 @@ namespace
             "pow",
             &dscript::stdlib::pow,
             2,2,"(%num,%exp)"
+            );
+
+        ctx.link_function(
+            "raizn",
+            &dscript::stdlib::raizn,
+            2,2,"(%indice,%cant)"
             );
 
         ctx.link_function(
