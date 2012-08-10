@@ -10,7 +10,7 @@ Toda la sintaxis explicada en este archivo es en español, la sintaxis clasica (
 
 Los operadores de este interprete son los mas comunes.
 
-<table width="100%">
+<table>
 	<tr>
 		<td>Suma</td>
 		<td>+</td>
