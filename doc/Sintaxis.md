@@ -50,7 +50,7 @@ Las variables globales (`$`), pueden ser declaradas dentro del ambito de una fun
 
 Mientras que las variables locales (`%`), si se declaran en el ambito global no pueden accesar a ellas en un ambito de funcion. Si son declaradas en el ambito de una funcion, estaran disponibles SOLO bajo el ambito de la funcion.
 
-Para ver un ejemplo vea el [test](../master/tests/07_ambitos.cpps) `07_ambitos.cpps`
+Para ver un ejemplo vea el [test](../tests/07_ambitos.cpps) `07_ambitos.cpps`
 
 ## Tipos de datos
 
@@ -119,4 +119,4 @@ podemos omitir la inicializacion como en C
 
 En CPPS los arreglos no son en *realidad* arreglos, lo que sucede es que la expresion en los indices del array es concatenada a la varaible que los posee con un `_` como separador.
 
-En el [test](../master/tests/08_arrays.cpps) `08_arrays.cpps` se ve claramente que se puede acceder al indice de un array de la forma clasica `%var[<numero>]` ó `%var_<numero>`.
+En el [test](../tests/08_arrays.cpps) `08_arrays.cpps` se ve claramente que se puede acceder al indice de un array de la forma clasica `%var[<numero>]` ó `%var_<numero>`.
