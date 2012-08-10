@@ -1,0 +1,31 @@
+DScript
+=======
+
+Esto es un Fork de [dscript](https://github.com/bryanjamesross/dscript) creado por Bryan Ross.
+
+DScript es un lenguaje interpretado, muy simple, parecido a PHP, basado en C++, es completamente funcional bajo entorno G++ 4.6.
+
+Caracteristicas:
+
+* [Sitaxis](./master/docs/Sintaxis.md) parecida a la de C/PHP.
+* Soporta Funciones definidas en el script.
+* Libreria de funciones Standard Completamente editable.
+* Soporte de Arrays Multidimensionales
+* 3 Tipos de datos basicos, Entero, Flotante (decimal) y Cadena.
+* Auto Typecasting
+  - **%variable** (variable local, se limpia en el ambito de la funcion actual).
+  - **$variable** (variable global, se mantiene activa hasta el fin de la ejecucion o se elimine manualmente).
+
+Algunas notas de implementacion:
+
+* Se usan las librerias [Boost::Spirit::Classic](http://www.boost.org/doc/libs/1_50_0/libs/spirit/doc/html/spirit/introduction.html), y la Libreria Standard de C++ (STL), para que sea compatible entre plataformas.
+* Embedirlo a una aplicacion es facil (falta por probar):
+    1. Incluir las fuentes, o compilar todo en un .lib e incluirlo.
+    2. Incluir la cabecera dscript.hpp.
+    3. Crear un objeto dscript::context.
+    4. Llama a los metodos de ese contexto para cargar y ejecutar los scripts.
+
+* Los archivos de script pueden ser compilados en un binario de byte-code para tiempos de carga mas cortos.
+* Los objetos dscript::context estan bien encapsulados, puedes tener varios a la vez sin problemas.
+* Los errores generados se pueden direccionar a un std::ostream especifico.
+* Las funciones del script pueden ser llamadas por una aplicacion padre a traves del objeto dscript::context.
