@@ -76,6 +76,16 @@ y se llaman igual que en C:
 
 	imprime_linea("Hola, Mundo!");
 
+## Condicionales
+
+CPPS solo soporta condicionales del tipo `si`/`sino` (`if`/`else`).
+
+	%x = 0;
+	si( %x == 1){
+		imprimir("%x Vale 1");
+	}sino{
+		imprimir("%x Vale 0");
+	}
 
 ## Bucles
 
