@@ -16,28 +16,24 @@ Los operadores de este interprete son los mas comunes.
 		<td>+</td>
 		<td>Resta</td>
 		<td>-</td>
+		<td>Producto</td>
+		<td>*</td>
 	</tr>
 	<tr>
 		<td colspan="2"><code>3 + 4 // = 7</code></td>
 		<td colspan="2"><code>7 - 3 // = 4</code></td>
+		<td colspan="2"><code>2 * 3 // = 6</code></td>
 	</tr>
 	<tr>
-		<td>Producto</td>
-		<td>*</td>
 		<td>Division</td>
 		<td>/</td>
-	</tr>
-	<tr>
-		<td colspan="2"><code>2 * 3 // = 6</code></td>
-		<td colspan="2"><code>9 / 3 // = 3</code></td>
-	</tr>
-	<tr>
 		<td>Modulo</td>
 		<td>%</td>
 		<td>Concatenacion</td>
 		<td>@</td>
 	</tr>
 	<tr>
+		<td colspan="2"><code>9 / 3 // = 3</code></td>
 		<td colspan="2"><code>3 % 2 // = 1</code></td>
 		<td colspan="2"><code>"Hola, " @ "Mundo!" // = "Hola, Mundo!"</code></td>
 	</tr>
