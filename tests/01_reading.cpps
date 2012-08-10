@@ -1,0 +1,27 @@
+//Automatically, the input is converted into strings by the compiler
+
+function print_line(%string)
+{
+	imprimir(%string @ "\n");
+}
+
+%x = 0; // int
+
+%y = "Test"; // string
+
+%x = readln("Give me a number: ");
+
+print_line(gettype(atoi(%y)));
+
+%y = readln("Give me a string: ");
+
+print_line(gettype(%x));
+
+%x = leer("Dame un numero: ");
+
+print_line(tipo(entero(%x)));
+
+%y = leer("Dame una cadena: ");
+
+print_line(tipo(%y));
+

@@ -1,0 +1,15 @@
+/* Division de Euclides */
+
+%x = 0;
+%y = 0;
+%coc = 0;
+%rest = 0;
+
+%x = leer("Dime un Numero: ");
+
+%y = leer("Dime un Numero: ");
+
+%coc = entero(%x) / entero(%y);
+%rest = valor(%x) % valor(%y);
+
+imprimir("Resultado: ", %coc, "\nRestan: ", %rest, "\n");

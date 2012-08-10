@@ -1,0 +1,67 @@
+// Una simple declaracion de funcion
+// las variables se prefixan con % para locales $ para locales
+
+funcion imprime_linea(%cadena) {
+	// Esta funcion es parte de la libreria standard.
+	// Vease stdlib.cpp
+	// @ es el operador de concatenacion.
+	// y el escape de caracteres al estilo C esta permitido
+	imprimir(%cadena @ "\n");
+}
+
+// Esta llamada de funcion esta en el ambito global
+// asi que sera llamada cuando el script se ejecute.
+imprime_linea("Hola, Mundo!");
+
+// esta variable es local, solo estara valida en el ambito
+// global, pero no en el ambito de una funcion.
+%x = 0;
+
+// Un bucle para
+
+// Tambien estan permitidos los operadores de incremento y decremento.
+para(; %x < 10; ++%x) {
+	// Esto es una variable global. Las variables prefixadas con un $
+	// son globales, y se pueden accesar a ellas hasta que el objeto dscript::context
+	// que las posee sea destruido.
+	// Los arreglos no son realmente arreglos. lo que sucede
+	// es que las expresiones de los indices del arreglo son evaluadas y concatenadas
+	// a la variable que las posee (en este caso $nombres), separados con un guion bajo
+	$nombres[%x] = "Nombre " @ %x;
+}
+
+// Condicional Si
+// Operadores Logicas y Operadores de comparacion estan totalmente soportados:
+// < > <= >=
+// == !=
+// && ||
+
+if($nombres[0] != $nombres_0)
+	// Esto es identico, ver explicacion arriba
+	imprime_linea("Sanity check failed!");
+
+// Cadenas, Enteros y Reales son los tipos de datos escenciales en CPPS.
+%x = 0; // Entero
+%y = "Test"; // Cadena
+%z = 1.234567; // Real
+%w = "Loool" @ "lll"; // Cadena
+
+imprime_linea(tipo(%w));
+
+if(tipo(%w) == "entero"){
+	imprime_linea("Es un entero");
+}else if(gettype(%w) == "cadena"){
+	imprime_linea("Es una cadena");
+}else if(gettype(%w) == "real"){
+	imprime_linea("Es un flotante");
+}
+
+// La conversion entre tipos es implicita. Enteros son convertidos a Reales
+// si son alterados por una expresion real, y las cadenas son convertidas a reales
+// si se espera un numero.
+
+// Toda cadena que no contenga un valor numerico se evalua a 0
+
+%x = "2 test";
+%y = 10 + %x; // %y == 12
+%z = %y + "hello"; // %y sigue siendo 12

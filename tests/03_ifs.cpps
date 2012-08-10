@@ -1,0 +1,27 @@
+%x = 6; // int
+
+if( ( (%x >= 5) && (%x <= 10) ) ){
+
+	if(%x == 5){
+		print("x = ", %x);
+	}else{
+		print("x has a value diferent from 5. ('", %x, "')\n");
+	}
+
+}else if(%x < 5){
+	print("x has a value lower than 5. ('", %x, "')\n");
+}
+
+imprimir("\n");
+
+si( ( (%x >= 5) && (%x <= 10) ) ){
+
+	si(%x == 5){
+		print("x = ", %x);
+	}sino{
+		print("x tiene una valor diferente de 5. ('", %x, "')\n");
+	}
+
+}sino si(%x < 5){
+	imprimir("x un valor menor que 5. ('", %x, "')\n");
+}

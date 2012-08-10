@@ -1,7 +1,19 @@
-for(%x = 0; %x < 10; %x++){
+// Para variables globales
+para(%x = 0; %x < 10; %x++){
 	$chars[%x] = "Posicion " @ (%x+1);
 }
 
-if($chars_0 == $chars[0]){
-	print("Son el mismo caracter\n"); 
+si($chars_0 == $chars[0]){
+	imprimir("Son el mismo caracter\n"); 
+}
+
+//Para variables locales
+
+
+para(%x = 0; %x < 10; %x++){
+	%chars[%x] = "Posicion " @ (%x+1);
+}
+
+si(%chars_0 == %chars[0]){
+	imprimir("Son el mismo caracter\n"); 
 }
