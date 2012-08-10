@@ -1,6 +1,6 @@
 # Sintaxis
 
-CPPS posee una sintaxis parecida a la de PHP/C, cada linea debe terminarse con un punto y coma.
+CPPS posee una sintaxis parecida a la de PHP/C, cada linea debe terminarse con un punto y coma:
 
 	imprimir("Esto es una funcion standard del interprete");
 
@@ -8,7 +8,7 @@ Toda la sintaxis explicada en este archivo es en español, la sintaxis clasica (
 
 ## Operadores
 
-Los operadores de este interprete son los mas comunes.
+Los operadores de este interprete son los mas comunes:
 
 <table>
 	<tr>
@@ -41,7 +41,7 @@ Los operadores de este interprete son los mas comunes.
 
 ## Variables
 
-Las variables se prefixan con `%` para locales `$` para locales.
+Las variables se prefixan con `%` para locales `$` para locales:
 
 	%local = "hola";
 	$global = "mundo";
@@ -54,7 +54,7 @@ Para ver un ejemplo vea el [test](../tests/07_ambitos.cpps) `07_ambitos.cpps`
 
 ## Tipos de datos
 
-En CPPS los tipos de datos escenciales son Enteros (int), Reales (double), Cadenas (strings).
+En CPPS los tipos de datos escenciales son Enteros (int), Reales (double), Cadenas (strings):
 
 	%x = 0; // Entero
 	%y = "Test"; // Cadena
@@ -63,7 +63,7 @@ En CPPS los tipos de datos escenciales son Enteros (int), Reales (double), Caden
 
 ## Funciones
 
-Una simple declaracion de funcion
+Una simple declaracion de funcion:
 
 	funcion imprime_linea(%cadena) {
 		// esta funcion es parte de la libreria standard de CPPS 
@@ -72,7 +72,7 @@ Una simple declaracion de funcion
 		imprimir(%cadena @ "\\n");
 	}
 
-y se llaman igual que en C
+y se llaman igual que en C:
 
 	imprime_linea("Hola, Mundo!");
 
@@ -87,7 +87,7 @@ Igual que C/PHP
 		// codigo
 	}
 
-Ejemplo
+Ejemplo:
 	
 	%x = 0;
 	mientras(%x > 10){
@@ -101,14 +101,15 @@ Ejemplo
 		// codigo
 	}
 
-Ejemplo
+Ejemplo:
 	
 	para(%x = 0; %x < 10; %x++){
 		imprimir(%x @ "\n");
 		%x++;
 	}
 
-podemos omitir la inicializacion como en C
+podemos omitir la inicializacion como en C:
+
 	%x = 0;
 	para(; %x<10; %x++){
 		imprimir(%x @ "\n");
