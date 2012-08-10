@@ -7,7 +7,7 @@ DScript es un lenguaje interpretado, muy simple, parecido a PHP, basado en C++, 
 
 Caracteristicas:
 
-* [Sintaxis](master/docs/Sintaxis.md) parecida a la de C/PHP.
+* [Sintaxis](CPPS/tree/master/doc/Sintaxis.md) parecida a la de C/PHP.
 * Soporta Funciones definidas en el script.
 * Libreria de funciones Standard Completamente editable.
 * Soporte de Arrays Multidimensionales
