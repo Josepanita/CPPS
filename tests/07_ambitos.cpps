@@ -1,0 +1,16 @@
+%local = 10;
+$global = 12;
+
+funcion ambito(){
+	print(%local); // Esto imprime Vacio
+	print($global @ "\n"); // Esto imprime 12
+	%local = "Hola Mundo"; // esto modifica la variable local
+	$global = 20; // Esto modifica la variable Global
+	print(%local);
+}
+
+ambito();
+
+print("\n" @ $global); // $global ahora vale 20
+
+print("\n" @ %local @ "\n"); // %local sigue valiendo 10

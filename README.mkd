@@ -13,8 +13,8 @@ Caracteristica:
 * Soporte de Arrays Multidimensionales
 * 3 Tipos de datos basicos, Entero, Flotante (decimal) y Cadena.
 * Auto Typecasting
-  - **%var** (variable local, se limpia en el ambito de la funcion actual).
-  - **$var** (variable global, se mantiene activa hasta el fin de la ejecucion o se elimine manualmente).
+  - **%variable** (variable local, se limpia en el ambito de la funcion actual).
+  - **$variable** (variable global, se mantiene activa hasta el fin de la ejecucion o se elimine manualmente).
 
 Algunas notas de implementacion:
 

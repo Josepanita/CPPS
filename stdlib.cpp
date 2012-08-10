@@ -347,7 +347,7 @@ namespace stdlib
             ctx.set_return("entero");
             break;
         case dscript::value::type_flt:
-            ctx.set_return("decimal");
+            ctx.set_return("real");
             break;
         case dscript::value::type_str:
             ctx.set_return("cadena");

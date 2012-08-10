@@ -1,0 +1,18 @@
+%x = 0;
+%y = 3.14159;
+%z = "Lorem ";
+%w = %z @ "Ipsum";
+
+funcion dime(%cadena){
+	imprimir(%cadena @ "\n");
+}
+
+%tipo = tipo(%x);
+dime(%tipo); // Entero
+%tipo = tipo(%y);
+dime(%tipo); // Entero
+%tipo = tipo(%z);
+dime(%tipo); // Cadena
+%tipo = tipo(%w);
+dime(%tipo); // Cadena
+
