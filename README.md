@@ -13,8 +13,8 @@ Caracteristicas:
 * Soporte de Arrays Multidimensionales
 * 3 Tipos de datos basicos, Entero, Flotante (decimal) y Cadena.
 * Auto Typecasting
-  - **%variable** (variable local, se limpia en el ambito de la funcion actual).
-  - **$variable** (variable global, se mantiene activa hasta el fin de la ejecucion o se elimine manualmente).
+* Modo Interactivo _(como la Terminal de Python)_
+* y muchas mas...
 
 Algunas notas de implementacion:
 
